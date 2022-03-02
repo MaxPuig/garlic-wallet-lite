@@ -9,7 +9,7 @@ Private keys are stored locally.
 This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib) and [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc).
 
 ## Installation
-- Go to the [releases page]() and download the latest APK.
+- Go to the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases) and download the latest APK.
 - Install the APK on your device.
 
 Alternatively, download the .zip file, extract it and run the APK.
