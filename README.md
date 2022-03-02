@@ -6,6 +6,8 @@ This is an Android and iOS app. However, it is only available right now as an An
 Transactions are created and signed locally. 
 Private keys are stored locally.
 
+The API URL can be changed in the settings tab.
+
 This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib) and [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc).
 
 ## Installation
