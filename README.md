@@ -1,7 +1,7 @@
 # Garlic Wallet Lite
-Garlicoin Wallet Lite app that uses the Insight Explorer to interact with the blockchain.
+Garlicoin Wallet Lite uses the Insight Explorer to interact with the blockchain.
 
-This is an Android and iOS app. However, it is only available right now as an Android APK file. There is a functioning iOS app that works exactly the same as the Android app, but an Apple Developer account is needed.
+This is an Android and iOS app. However, it is only available right now as an Android APK file. There is a functioning iOS app that works exactly the same as the Android app, but an Apple Developer account is required.
 
 Transactions are created and signed locally.
 
@@ -18,7 +18,7 @@ This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](ht
 Alternatively, download the .zip file, extract it and run the APK.
 
 ## Useful information
-- Fees will automatically be calculated and are about 100-200 sats/byte. The receiver will get the amount entered, and the fee will be deducted from the remaining balance. 
+- Fees will automatically be calculated and are about 100-200 sats/byte. The receiver will get the amount entered, and the fee will be deducted from the remaining balance.
 
 - To send the entire available balance, enter the entire amount. The amount received will be the same as the amount entered minus the fee.
 
@@ -30,25 +30,33 @@ Alternatively, download the .zip file, extract it and run the APK.
 
 ## API Endpoints
 
-This app uses the `Insight Explorer` v8.9.0 and `freshgrlc.net`'s API. 
+This app uses the `Insight Explorer` v8.9.0, `garlicblocks.com` and `freshgrlc.net`'s API. 
 
-Inside the app you can chose which one you want to use. In case you use the `freshgrlc.net` API, transactions will be broadcasted through `https://garlicblocks.com/api/tx/send`.
+Inside the app you can chose which one you want to use. If you activate `FreshGRLC mode` in settings, the app will use `freshgrlc.net` to get the balance and UTXOs, and `garlicblocks.com` to broadcast transactions.
 
 The default API base URL for the Insight Explorer is `https://garlicoin.info` and can be changed in the settings tab.
 
-The API has to be able to provide information on the following endpoints: 
+The Insight API has to be able to provide information on the following endpoints: 
 
 - `/api/GRLC/mainnet/address/` + address + `/balance`
-    - GET `{balance, confirmed, unconfirmed} (sats)`
+    - GET `{balance, confirmed, unconfirmed} (in sats)`
 
 - `/api/GRLC/mainnet/address/` + address + `/?unspent=true`
-    - GET `{mintTxid, mintIndex, address, script, value} (sats)`
+    - GET `{mintTxid, mintIndex, value} (in sats)`
 
 - `/api/GRLC/mainnet/tx/send`
     - POST `{rawTx: "0100..."}`
 
 - `/#/GRLC/mainnet/tx/` + txid
     - Explorer link
+
+FreshGRLC mode uses:
+- `https://api.freshgrlc.net/blockchain/grlc/address/` + address
+    - GET `{balance, pending} (in GRLC)`
+- `https://api.freshgrlc.net/blockchain/grlc/address/` + address + `/utxos`
+    - GET `{transaction.txid, index, value} (in GRLC)`
+- `https://garlicblocks.com/api/tx/send`
+    - POST `{rawtx: "0100..."}`
 
 ## Consolidate
 Sometimes, specially when you are mining, you will get a big amount of transactions to your address. When you send a transaction, it is made up of previous (unspent) transactions. The more (unspent) transactions get joined, the bigger the byte size of the transaction is. There is a byte limit, which is about 600 unspent transactions (UTXOs). Garlic Wallet Lite won't send a transaction if it has 550 or more UTXOs. 
