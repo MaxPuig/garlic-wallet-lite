@@ -9,7 +9,7 @@ Private keys are stored locally.
 
 The API URL can be changed in the settings tab.
 
-This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib) and [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc).
+This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/) and [CoinGecko](https://www.coingecko.com/api).
 
 ## Installation Android
 - Go to the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases) and download the latest APK.
