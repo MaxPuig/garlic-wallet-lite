@@ -1,8 +1,8 @@
 {
   "name": "garlic-wallet-lite",
-  "version": "1.0.0",
+  "version": "1.2.1",
   "description": "This is a Garlicoin Wallet app that uses the Insight Explorer to interact with the blockchain.",
-  "main": "garlic-wallet-lite.js",
+  "main": "garlic_wallet_lite.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,8 +18,10 @@
   "homepage": "https://github.com/MaxPuig/garlic-wallet-lite#readme",
   "dependencies": {
     "axios": "^0.26.0",
-    "bitcore-lib-grlc": "^1.0.2",
+    "bitcore-lib-grlc": "^1.0.3",
+    "express": "^4.17.3",
     "garlicoinjs-lib": "^1.0.1",
+    "node-fetch": "^2.6.7",
     "prompt-sync": "^4.2.0"
   },
   "devDependencies": {

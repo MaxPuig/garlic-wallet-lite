@@ -39,13 +39,13 @@ The default API base URL for the Insight Explorer is `https://garlicoin.info` an
 The Insight API has to be able to provide information on the following endpoints: 
 
 - `/api/GRLC/mainnet/address/` + address + `/balance`
-    - GET `{balance, confirmed, unconfirmed} (in sats)`
+    - GET `{confirmed, unconfirmed} (in sats)`
 
 - `/api/GRLC/mainnet/address/` + address + `/?unspent=true`
     - GET `{mintTxid, mintIndex, value} (in sats)`
 
 - `/api/GRLC/mainnet/tx/send`
-    - POST `{rawTx: "0100..."}`
+    - POST `{rawTx: "0200..."}`
 
 - `/#/GRLC/mainnet/tx/` + txid
     - Explorer link
@@ -64,3 +64,6 @@ Sometimes, specially when you are mining, you will get a big amount of transacti
 The solution to this is to consolidate your UTXOs. This is done by sending multiple transactions, each including about 600 UTXOs.
 
 You can do this by running [this file](./consolidate.js) in node.js. The instructions are written in the comments inside the file.
+
+## Self-Host
+If you want to use a different explorer than the one provided by the app, you can host your own explorer. Here's an [example](./self_host.js).
