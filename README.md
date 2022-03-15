@@ -1,7 +1,7 @@
 # Garlic Wallet Lite
 Garlicoin Wallet Lite uses the Insight Explorer to interact with the blockchain.
 
-This is an Android and iOS app. However, it is only available right now as an Android APK file. There is a functioning iOS app that works exactly the same as the Android app, but an Apple Developer account is required.
+It is an Android and iOS app. However, it is only available right now as an Android APK file. There is a functioning iOS app that works exactly the same as the Android app, but an Apple Developer account is required.
 
 Transactions are created and signed locally.
 
@@ -15,7 +15,7 @@ This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](ht
 - Go to the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases) and download the latest APK.
 - Install the APK on your device.
 
-Alternatively, download the .zip file, extract it and run the APK.
+Alternatively, download the .zip file, extract it and install the APK.
 
 ## Useful information
 - Fees will automatically be calculated and are about 100-200 sats/byte. The receiver will get the amount entered, and the fee will be deducted from the remaining balance.
@@ -56,7 +56,7 @@ FreshGRLC mode uses:
 - `https://api.freshgrlc.net/blockchain/grlc/address/` + address + `/utxos`
     - GET `{transaction.txid, index, value} (in GRLC)`
 - `https://garlicblocks.com/api/tx/send`
-    - POST `{rawtx: "0100..."}`
+    - POST `{rawtx: "0200..."}`
 
 ## Consolidate
 Sometimes, specially when you are mining, you will get a big amount of transactions to your address. When you send a transaction, it is made up of previous (unspent) transactions. The more (unspent) transactions get joined, the bigger the byte size of the transaction is. There is a byte limit, which is about 600 unspent transactions (UTXOs). Garlic Wallet Lite won't send a transaction if it has 550 or more UTXOs. 
@@ -66,4 +66,4 @@ The solution to this is to consolidate your UTXOs. This is done by sending multi
 You can do this by running [this file](./consolidate.js) in node.js. The instructions are written in the comments inside the file.
 
 ## Self-Host
-If you want to use a different explorer than the one provided by the app, you can host your own explorer. Here's an [example](./self_host.js).
+If you want to use a different explorer than the one provided by the app, you can host your own. Here's an [example](./self_host.js).
