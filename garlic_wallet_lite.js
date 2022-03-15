@@ -4,8 +4,8 @@ const garlicore = require('garlicoinjs-lib');
 export async function create_tx(privKey, G_or_M_or_grlc1, utxos_api, to_address, send_amount, freshgrlc) {
     if (utxos_api.length == 0) return 'Your balance is 0';
     if (utxos_api.length > 550) return 'You have more than 550 utxos, consolidate them before sending. More info in the settings tab';
-    let send_amount_sats = Math.floor(send_amount * 100_000_000);
-    let [from_address, nothing] = get_Address_And_PrivKey(G_or_M_or_grlc1, privKey);
+    let send_amount_sats = Math.round(send_amount * 100_000_000);
+    let [from_address, not_used] = get_Address_And_PrivKey(G_or_M_or_grlc1, privKey);
     let keyPair; try { keyPair = garlicore.ECPair.fromPrivateKey(Buffer.from(privKey, 'hex')); } catch { keyPair = garlicore.ECPair.fromWIF(privKey); }
     const p2wpkh = garlicore.payments.p2wpkh({ pubkey: keyPair.publicKey })
     const p2sh = garlicore.payments.p2sh({ redeem: p2wpkh })
@@ -13,11 +13,11 @@ export async function create_tx(privKey, G_or_M_or_grlc1, utxos_api, to_address,
     let utxos;
     if (freshgrlc) {
         utxos = utxos_api.map(function (utxo) {
-            total_sats += utxo.value * 100_000_000;
+            total_sats += Math.round(utxo.value * 100_000_000);
             return {
                 txid: utxo.transaction.txid,
                 vout: utxo.index,
-                satoshis: utxo.value * 100_000_000,
+                satoshis: Math.round(utxo.value * 100_000_000), // Floating point errors
             };
         });
     } else {
@@ -80,8 +80,7 @@ export async function create_tx(privKey, G_or_M_or_grlc1, utxos_api, to_address,
         }
         return tx.build().toHex();
     } catch (error) {
-        console.log(error);
-        return 'An Error occured while creating the transaction.';
+        return 'An Error occured while creating the transaction.' + error.message.toString();
     }
 }
 
