@@ -1,21 +1,25 @@
 # Garlic Wallet Lite
-Garlicoin Wallet Lite uses the Insight Explorer to interact with the blockchain.
+Garlicoin Wallet Lite is an iOS and Android app that uses the Insight Explorer to interact with the blockchain.
 
-It is an Android and iOS app. However, it is only available right now as an Android APK file. There is a functioning iOS app that works exactly the same as the Android app, but an Apple Developer account is required.
+The Android version is available as an APK file in the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases). And the iOS version is currently in beta ([TestFlight](https://testflight.apple.com/join/LPI0nwol)).
 
-Transactions are created and signed locally.
+- Transactions are created and signed locally.
 
-Private keys are stored locally.
+- Private keys are stored locally.
 
-The API URL can be changed in the settings tab.
+- The API URL can be changed in the settings tab.
 
-This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/) and [CoinGecko](https://www.coingecko.com/api).
+> This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/) and [CoinGecko](https://www.coingecko.com/api).
 
 ## Installation Android
 - Go to the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases) and download the latest APK.
 - Install the APK on your device.
 
 Alternatively, download the .zip file, extract it and install the APK.
+
+## Installation iOS
+- Go to the [TestFlight site](https://testflight.apple.com/join/LPI0nwol) and follow the instructions.
+- You should be able to install the app on any iOS 14 device (iPhone, iPad, iPod Touch) and M1 Macs.
 
 ## Useful information
 - Fees will automatically be calculated and are about 100-200 sats/byte. The receiver will get the amount entered, and the fee will be deducted from the remaining balance.
@@ -32,7 +36,7 @@ Alternatively, download the .zip file, extract it and install the APK.
 
 This app uses the `Insight Explorer` v8.9.0, `garlicblocks.com` and `freshgrlc.net`'s API. 
 
-Inside the app you can chose which one you want to use. If you activate `FreshGRLC mode` in settings, the app will use `freshgrlc.net` to get the balance and UTXOs, and `garlicblocks.com` to broadcast transactions.
+Inside the app you can chose which one you want to use. If you activate `FreshGRLC mode` in settings, the app will use `freshgrlc.net` to get the balance and UTXOs, and `garlicblocks.com` to broadcast transactions, otherwise, `garlicoin.info` will be used for everything.
 
 The default API base URL for the Insight Explorer is `https://garlicoin.info` and can be changed in the settings tab.
 
