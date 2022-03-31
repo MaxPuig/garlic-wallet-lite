@@ -59,7 +59,7 @@ function sendNotif(tx) {
             'to': '/topics/' + address,
             'notification': {
                 'title': 'New transaction!',
-                'body': 'You received ' + tx[address] + ' GRLC',
+                'body': `${address} received ${tx[address]} GRLC`,
                 'mutable_content': false,
                 'sound': 'default'
             }

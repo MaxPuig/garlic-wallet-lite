@@ -9,6 +9,8 @@ The Android version is available as an APK file in the [releases page](https://g
 
 - The API URL can be changed in the settings tab.
 
+- Opt-in notifications for new transactions to any address.
+
 > This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/) and [CoinGecko](https://www.coingecko.com/api).
 
 ## Installation Android
