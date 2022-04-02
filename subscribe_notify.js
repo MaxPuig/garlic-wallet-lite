@@ -1,9 +1,14 @@
 require('dotenv').config()
 const key = process.env.FCM_KEY;
+const fs = require('fs');
+const https = require('https');
+const privateKey = fs.readFileSync('./privkey.pem', 'utf8');
+const certificate = fs.readFileSync('./fullchain.pem', 'utf8');
+const options = { key: privateKey, cert: certificate };
 const fetch = require('node-fetch');
 const express = require('express');
 const app = express();
-const port = 80;
+const port = 6969;
 
 
 app.get('/gwl/delete/:token', async function (req, res) {
@@ -18,7 +23,7 @@ app.get('/gwl/delete/:token', async function (req, res) {
         response = await response.json();
         topics = response.rel?.topics || [];
         for (let topic in topics) sub_topics.push(topic);
-        if(response.error) topics = "error";
+        if (response.error) topics = "error";
     } catch (e) {
         topics = "error";
         console.log(e.toString());
@@ -64,6 +69,9 @@ app.get('/gwl/subscribe/:token/:address', async function (req, res) {
 });
 
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`)
-})
+const httpsServer = https.createServer(options, app);
+
+
+httpsServer.listen(port, () => {
+    console.log("Https server listing on port : " + port)
+});
