@@ -55,10 +55,15 @@ app.get('/gwl/subscribe/:token/:address', async function (req, res) {
     const token = req.params.token;
     const address = req.params.address;
     try {
-        await fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/${address}`, {
+        let response = await fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/${address}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'Authorization': "key=" + key }
         });
+        response = await response.json();
+        if (response.error) {
+            res.send({ success: false });
+            return;
+        }
         res.send({ success: true });
         return;
     } catch (e) {
