@@ -1,7 +1,7 @@
 {
   "name": "garlic-wallet-lite",
-  "version": "1.2.1",
-  "description": "This is a Garlicoin Wallet app that uses the Insight Explorer to interact with the blockchain.",
+  "version": "1.4.0",
+  "description": "iOS/Android Garlicoin Wallet app that uses the Insight Explorer to interact with the blockchain.",
   "main": "garlic_wallet_lite.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
