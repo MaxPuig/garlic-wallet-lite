@@ -59,7 +59,7 @@ function sendNotif(tx) {
             'to': '/topics/' + address,
             'notification': {
                 'title': 'New transaction!',
-                'body': `${address} received ${tx[address]} GRLC`,
+                'body': `Amount: ${tx[address]} GRLC\nTo: ${address.slice(0, 5)}...${address.slice(-5)}`,
                 'mutable_content': false,
                 'sound': 'default'
             }
