@@ -1,38 +1,36 @@
 # Garlic Wallet Lite
 Garlicoin Wallet Lite is an iOS and Android app that uses the Insight Explorer to interact with the blockchain.
-
-The Android version is available as an APK file in the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases). And the iOS version is currently in beta ([TestFlight](https://testflight.apple.com/join/LPI0nwol)).
+> Sponsored by the [Garlicoin Federation](https://garlicoin.io/garlicoin-federation/)
 
 - Transactions are created and signed locally.
-
 - Private keys are stored locally.
-
 - The API URL can be changed in the settings tab.
-
 - Opt-in notifications for new transactions to any address.
 
-> This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/) and [CoinGecko](https://www.coingecko.com/api).
+> This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/), [express](https://expressjs.com/), [webpack](https://webpack.js.org/), [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin), [axios](https://github.com/axios/axios) and [CoinGecko](https://www.coingecko.com/api).
 
-## Installation Android
+## Download App
+[iOS App Store](https://apps.apple.com/app/garlic-wallet-lite/id1614741682)
+> iPhone, iPad, iPod Touch and M1 Macs. The iOS version has a beta channel using [TestFlight](https://testflight.apple.com/join/LPI0nwol).
+
+[Android Play Store](https://play.google.com/store/apps/details?id=com.garlicwalletlite.app)
+> The Android versions are also available as an APK file in the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases).
+
+## Installation Android APK
 - Go to the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases) and download the latest APK.
 - Install the APK on your device.
+> Alternatively, download the .zip file, extract it and install the APK.
 
-Alternatively, download the .zip file, extract it and install the APK.
-
-## Installation iOS
+## Installation iOS Beta
 - Go to the [TestFlight site](https://testflight.apple.com/join/LPI0nwol) and follow the instructions.
-- You should be able to install the app on any iOS 14 device (iPhone, iPad, iPod Touch) and M1 Macs.
+- You should be able to install the app on any iOS 14 device (iPhone, iPad, iPod Touch and M1 Macs).
 
 ## Useful information
 - Fees will automatically be calculated and are about 100-200 sats/byte. The receiver will get the amount entered, and the fee will be deducted from the remaining balance.
-
 - To send the entire available balance, enter the entire amount. The amount received will be the same as the amount entered minus the fee.
-
 - Private Keys (and WIFs) can be imported or created directly from the app.
-
 - It is possible to choose between P2PKH (G), P2SH (M) and P2WPKH (grlc1) addresses.
-
-- Due to the nature of AppGyver, it is not possible to make the project open source. However, [all functions](./garlic_wallet_lite.js) used in the project are included in this repository. If requested (and possible), a copy of the app will be transfered to your AppGyver account.
+- Due to the nature of AppGyver, it is not possible to make the project completely open source. However, [all functions](./garlic_wallet_lite.js) used in the project are included in this repository. If requested (and possible), a copy of the app will be transfered to your AppGyver account.
 
 ## API Endpoints
 
@@ -59,8 +57,10 @@ The Insight API has to be able to provide information on the following endpoints
 FreshGRLC mode uses:
 - `https://api.freshgrlc.net/blockchain/grlc/address/` + address
     - GET `{balance, pending} (in GRLC)`
+
 - `https://api.freshgrlc.net/blockchain/grlc/address/` + address + `/utxos`
     - GET `{transaction.txid, index, value} (in GRLC)`
+
 - `https://garlicblocks.com/api/tx/send`
     - POST `{rawtx: "0200..."}`
 
