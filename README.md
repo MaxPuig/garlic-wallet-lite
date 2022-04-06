@@ -9,6 +9,9 @@ Garlicoin Wallet Lite is an iOS and Android app that uses the Insight Explorer t
 
 > This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/), [express](https://expressjs.com/), [webpack](https://webpack.js.org/), [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin), [axios](https://github.com/axios/axios) and [CoinGecko](https://www.coingecko.com/api).
 
+## Support
+If you wish to receive support or get in contact, please open an issue on [Github](https://github.com/MaxPuig/garlic-wallet-lite/issues/new).
+
 ## Download App
 [iOS App Store](https://apps.apple.com/app/garlic-wallet-lite/id1614741682)
 > iPhone, iPad, iPod Touch and M1 Macs. The iOS version has a beta channel using [TestFlight](https://testflight.apple.com/join/LPI0nwol).
