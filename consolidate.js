@@ -16,6 +16,7 @@ const address_starts_with_grlc1 = false; // true/false --> false if it starts wi
 const time_between_tx_seconds = 10; // So you don't get ratelimited by the API
 const extra_secure_mode = true; // true/false --> asks for confirmation before every transaction is broadcasted
 const join_tx = 600; // Use "join_tx = 2" your first time to check if it works correctly. Don't go over 600
+garlicore.Transaction.FEE_PER_KB = 100000; // if you get "66: min relay fee not met", increase this number to 110000.
 /* EDIT */
 
 
@@ -45,7 +46,7 @@ function get_address(privKey) {
 
 async function get_utxo(from_address) {
     try {
-        let api_url = url + 'address/' + from_address + '/?unspent=true';
+        let api_url = url + 'address/' + from_address + '/?unspent=true&limit=0';
         const response = await axios.get(api_url);
         const utxos_api = response.data;
         const utxo = utxos_api.map(function (utxo) {
