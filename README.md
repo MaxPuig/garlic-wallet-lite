@@ -48,7 +48,7 @@ The Insight API has to be able to provide information on the following endpoints
 - `/api/GRLC/mainnet/address/` + address + `/balance`
     - GET `{confirmed, unconfirmed} (in sats)`
 
-- `/api/GRLC/mainnet/address/` + address + `/?unspent=true`
+- `/api/GRLC/mainnet/address/` + address + `/?unspent=true&limit=0`
     - GET `{mintTxid, mintIndex, value} (in sats)`
 
 - `/api/GRLC/mainnet/tx/send`
@@ -73,6 +73,23 @@ Sometimes, specially when you are mining, you will get a big amount of transacti
 The solution to this is to consolidate your UTXOs. This is done by sending multiple transactions, each including about 600 UTXOs.
 
 You can do this by running [this file](./consolidate.js) in node.js. The instructions are written in the comments inside the file.
+
+## Import Private Keys into Garlicoin Core
+```
+Help -> Debug Window -> Console and type:
+"importprivkey <Priv_Key>"
+```
+
+If you get this error `invalid private key encoding (code -5)` this means the Private Key's format is in base58. You can convert it to WIF by running [this file](./import_privkey_core.js) in node.js. 
+
+> If you import a new Private Key into Garlicoin Core, you will need to reindex the entire blockchain.
+
+If you really want to have the same address on Garlicoin Core and GWL, export a Private Key from Garlicoin Core and import it into GWL. This way you will not have to reindex anything.
+
+```
+- Help -> Debug Window -> Console and type: 
+"dumpprivkey <address>"
+```
 
 ## Self-Host
 If you want to use a different explorer than the one provided by the app, you can host your own. Here's an [example](./self_host.js).
