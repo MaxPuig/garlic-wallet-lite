@@ -1,7 +1,7 @@
 const garlicore = require('garlicoinjs-lib');
 
 
-export async function create_tx(privKey, G_or_M_or_grlc1, utxos_api, to_address, send_amount, freshgrlc) {
+export async function create_tx(privKey, G_or_M_or_grlc1, utxos_api, to_address, send_amount, freshgrlc, custom_fee) {
     if (utxos_api.length == 0) return 'Your balance is 0';
     if (utxos_api.length > 550) return 'You have more than 550 utxos, consolidate them before sending. More info in the settings tab';
     let send_amount_sats = Math.round(send_amount * 100_000_000);
@@ -51,7 +51,7 @@ export async function create_tx(privKey, G_or_M_or_grlc1, utxos_api, to_address,
         }
 
         // Calculate fee
-        const feeRate = 150; // satoshi / byte
+        const feeRate = custom_fee || 150; // satoshi / byte
         let size = txb.build().virtualSize() + utxos_api.length;
         if (!send_all) size += 1; // add for change
         const fee = feeRate * size;
