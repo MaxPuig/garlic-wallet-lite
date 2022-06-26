@@ -29,7 +29,8 @@ If you wish to receive support or get in contact, please open an issue on [Githu
 - You should be able to install the app on any iOS 14 device (iPhone, iPad, iPod Touch and M1 Macs).
 
 ## Useful information
-- Fees will automatically be calculated and are about 100-200 sats/byte. The receiver will get the amount entered, and the fee will be deducted from the remaining balance.
+- Fees are set by default to 100-200 sats/byte. The amount can be changed in settings.
+- The receiver will get the amount entered, and the fee will be deducted from the remaining balance.
 - To send the entire available balance, enter the entire amount. The amount received will be the same as the amount entered minus the fee.
 - Private Keys (and WIFs) can be imported or created directly from the app.
 - It is possible to choose between P2PKH (G), P2SH (M) and P2WPKH (grlc1) addresses.
@@ -96,7 +97,6 @@ If you want to use a different explorer than the one provided by the app, you ca
 
 
 ## TODO
-- Add ability to choose fees
 - Add support for multiple addresses
 - Add ability to see past transactions
 - Add dark mode
