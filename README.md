@@ -14,15 +14,17 @@ If you wish to receive support or get in contact, please open an issue on [Githu
 
 ## Download App
 [iOS App Store](https://apps.apple.com/app/garlic-wallet-lite/id1614741682)
-> iPhone, iPad, iPod Touch and M1 Macs. The iOS version has a beta channel using [TestFlight](https://testflight.apple.com/join/LPI0nwol).
+> iOS ≥14: iPhone, iPad, iPod Touch and M1 Macs. The iOS version has a beta channel using [TestFlight](https://testflight.apple.com/join/LPI0nwol).
 
 [Android Play Store](https://play.google.com/store/apps/details?id=com.garlicwalletlite.app)
+> Android beta version available on the [Android Play Store](https://play.google.com/apps/testing/com.garlicwalletlite.app).
+
 > The Android versions are also available as an APK file in the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases).
 
 ## Installation Android APK
 - Go to the [releases page](https://github.com/MaxPuig/garlic-wallet-lite/releases) and download the latest APK.
 - Install the APK on your device.
-> Alternatively, download the .zip file, extract it and install the APK.
+> Alternatively, download the .zip file, extract it and install the .apk file.
 
 ## Installation iOS Beta
 - Go to the [TestFlight site](https://testflight.apple.com/join/LPI0nwol) and follow the instructions.
