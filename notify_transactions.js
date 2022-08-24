@@ -34,10 +34,12 @@ function showNewTransactions() {
                 rpc.decodeRawTransaction(rawtx.result.toString('hex'), function (err, resp) {
                     let recipients = {};
                     resp.result.vout.forEach(function (vout) {
-                        if (recipients[vout.scriptPubKey.addresses[0]]) {
-                            recipients[vout.scriptPubKey.addresses[0]] += vout.value;
-                        } else {
-                            recipients[vout.scriptPubKey.addresses[0]] = vout.value;
+                        if (vout.scriptPubKey.type !== 'nulldata') {
+                            if (recipients[vout.scriptPubKey.addresses[0]]) {
+                                recipients[vout.scriptPubKey.addresses[0]] += vout.value;
+                            } else {
+                                recipients[vout.scriptPubKey.addresses[0]] = vout.value;
+                            }
                         }
                     });
                     if (Object.keys(recipients).length > 0) {
