@@ -13,6 +13,7 @@ const port = 6969;
 
 app.get('/gwl/delete/:token', async function (req, res) {
     const token = req.params.token;
+    log_events(`Delete request by: ${token}`)
     let topics;
     try {
         let sub_topics = [];
@@ -54,6 +55,7 @@ app.get('/gwl/delete/:token', async function (req, res) {
 app.get('/gwl/subscribe/:token/:address', async function (req, res) {
     const token = req.params.token;
     const address = req.params.address;
+    log_events(`Subscribe request by: ${token}`)
     try {
         let response = await fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/${address}`, {
             method: 'POST',
@@ -72,6 +74,18 @@ app.get('/gwl/subscribe/:token/:address', async function (req, res) {
         return;
     }
 });
+
+
+function log_events(event){
+    const dateObject = new Date();
+    const date = (`0 ${dateObject.getDate()}`).slice(-2);
+    const month = (`0 ${dateObject.getMonth() + 1}`).slice(-2);
+    const year = dateObject.getFullYear();
+    const hours = dateObject.getHours();
+    const minutes = dateObject.getMinutes();
+    const seconds = dateObject.getSeconds();
+    console.log(`${year}-${month}-${date} ${hours}:${minutes}:${seconds} - ${event}`);
+}
 
 
 const httpsServer = https.createServer(options, app);
