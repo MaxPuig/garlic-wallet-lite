@@ -46,7 +46,7 @@ Inside the app you can chose which one you want to use. If you activate `FreshGR
 
 The default API base URL for the Insight Explorer is `https://garlicoin.info` and can be changed in the settings tab.
 
-The Insight API has to be able to provide information on the following endpoints: 
+The Insight API (or wrapper) has to be able to provide information on the following endpoints: 
 
 - `/api/GRLC/mainnet/address/` + address + `/balance`
     - GET `{confirmed, unconfirmed} (in sats)`
@@ -56,6 +56,7 @@ The Insight API has to be able to provide information on the following endpoints
 
 - `/api/GRLC/mainnet/tx/send`
     - POST `{rawTx: "0200..."}`
+    - Response `{txid: ...}`
 
 - `/#/GRLC/mainnet/tx/` + txid
     - Explorer link
@@ -65,10 +66,13 @@ FreshGRLC mode uses:
     - GET `{balance, pending} (in GRLC)`
 
 - `https://api.freshgrlc.net/blockchain/grlc/address/` + address + `/utxos`
-    - GET `{transaction.txid, index, value} (in GRLC)`
+    - GET `[{transaction.txid, index, value}, ...] (in GRLC)`
 
 - `https://garlicblocks.com/api/tx/send`
     - POST `{rawtx: "0200..."}`
+    - Response `{txid: ...}`
+- `https://garlicblocks.com/tx/` + txid
+    - Explorer link
 
 ## Consolidate
 Sometimes, specially when you are mining, you will get a big amount of transactions to your address. When you send a transaction, it is made up of previous (unspent) transactions. The more (unspent) transactions get joined, the bigger the byte size of the transaction is. There is a byte limit, which is about 600 unspent transactions (UTXOs). Garlic Wallet Lite won't send a transaction if it has 550 or more UTXOs. 
