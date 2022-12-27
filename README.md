@@ -52,7 +52,7 @@ The Insight API has to be able to provide information on the following endpoints
     - GET `{confirmed, unconfirmed} (in sats)`
 
 - `/api/GRLC/mainnet/address/` + address + `/?unspent=true&limit=0`
-    - GET `{mintTxid, mintIndex, value} (in sats)`
+    - GET `[{mintTxid, mintIndex, value}, ...] (in sats)`
 
 - `/api/GRLC/mainnet/tx/send`
     - POST `{rawTx: "0200..."}`
