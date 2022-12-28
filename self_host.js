@@ -1,4 +1,3 @@
-const path = require('path');
 const fetch = require('node-fetch');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -12,7 +11,12 @@ const port = 80;
 
 app.get('/', function (req, res) {
     // deletes /#/ from the url to access txid on explorer
-    res.sendFile(path.join(__dirname, '/index.html'));
+    let response = Buffer.from('<script> const hash = window.location.hash;' +
+        'if (hash.length > 0 && hash.includes("#/")) {' +
+        'window.location.replace(window.location.href.replace("#/", ""));' +
+        '} </script >');
+    res.set('Content-Type', 'text/html');
+    res.send(response);
 });
 
 
@@ -65,5 +69,5 @@ app.get('/api/GRLC/mainnet/address/:address', async function (req, res) {
 
 
 app.listen(port, () => {
-    console.log(`Listening on port ${port}`)
+    console.log(`Listening on port ${port}`);
 })
