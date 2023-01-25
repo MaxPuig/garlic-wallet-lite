@@ -1,4 +1,4 @@
-const garlicore = require('garlicoinjs-lib');
+import garlicore from 'garlicoinjs-lib';
 
 
 export async function create_tx(privKey, G_or_M_or_grlc1, utxos_api, to_address, send_amount, freshgrlc, custom_fee) {

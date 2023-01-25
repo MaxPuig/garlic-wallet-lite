@@ -1,6 +1,7 @@
-const garlicore = require('bitcore-lib-grlc')
-const axios = require('axios')
-const prompt = require('prompt-sync')({ sigint: true });
+import garlicore from 'bitcore-lib-grlc';
+import axios from 'axios';
+import prompt from 'prompt-sync';
+const promptSync = prompt({ sigint: true });
 // Install node.js
 // Create a folder and put this file in it
 // Install packages using "npm i bitcore-lib-grlc axios prompt-sync"
@@ -112,10 +113,10 @@ async function broadcast_tx(serialized_transactions) {
     for (let tx of serialized_transactions) {
         current_tx++;
         if (extra_secure_mode) {
-            const confirm = prompt(`This will send ${tx.amount / 100_000_000} GRLC to ${tx.destination} . Is this correct? [y/n] `);
+            const confirm = promptSync(`This will send ${tx.amount / 100_000_000} GRLC to ${tx.destination} . Is this correct? [y/n] `);
             if (confirm.toLowerCase() !== 'y') {
-                console.log('Stopping the script... That transaction won\'t be broadcasted!')
-                process.exit(1)
+                console.log('Stopping the script... That transaction won\'t be broadcasted!');
+                process.exit(1);
             }
         }
         try {
@@ -123,29 +124,29 @@ async function broadcast_tx(serialized_transactions) {
                 rawTx: tx.serialized_tx
             });
             const txid = await response.data;
-            console.log('https://garlicoin.info/#/GRLC/mainnet/tx/' + txid.txid)
+            console.log('https://garlicoin.info/#/GRLC/mainnet/tx/' + txid.txid);
         } catch (error) {
             console.log(error.response.data);
         }
         if (current_tx < total_tx) {
-            console.log(`Waiting ${time_between_tx_seconds} seconds before sending the next transaction...`)
+            console.log(`Waiting ${time_between_tx_seconds} seconds before sending the next transaction...`);
             await sleep(time_between_tx_seconds * 1000); // wait x sec until next transaction is broadcasted
         }
     }
-    console.log('No more transactions to send! Exiting...')
+    console.log('No more transactions to send! Exiting...');
 }
 
 
 async function main() {
     console.log('If this is your first time running the script, use "join_tx = 2" to check if it works correctly.');
-    console.log('To stop the script use "ctrl + c" in the terminal.')
-    const correct_address = prompt(`Is this your address? ${get_address(privKey).toString()} [y/n] `);
-    const correct_destination = prompt(`Is this where you want to send the coins? ${destination_address} [y/n] `);
+    console.log('To stop the script use "ctrl + c" in the terminal.');
+    const correct_address = promptSync(`Is this your address? ${get_address(privKey).toString()} [y/n] `);
+    const correct_destination = promptSync(`Is this where you want to send the coins? ${destination_address} [y/n] `);
     if (correct_address.toLowerCase() == 'y' && correct_destination.toLowerCase() == 'y') {
         const tx = await create_tx(privKey, destination_address);
         await broadcast_tx(tx);
     } else {
-        console.log('Check "private_key", "address_starts_with_M" and "destination_address" and try again.')
+        console.log('Check "private_key", "address_starts_with_M" and "destination_address" and try again.');
     }
 }
 

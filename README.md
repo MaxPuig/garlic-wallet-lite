@@ -99,7 +99,9 @@ If you really want to have the same address on Garlicoin Core and GWL, export a 
 ```
 
 ## Self-Host
-If you want to use a different explorer than the one provided by the app, you can host your own. Here's an [example](./self_host.js).
+If you want to use a different explorer than the one provided by the app, you can host your own. 
+- [Example using electrum servers](./self_host_electrum.js). (Recommended)
+- [Example using garlicblocks.com](./self_host.js).
 
 
 ## TODO

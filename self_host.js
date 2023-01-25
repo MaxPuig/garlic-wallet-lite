@@ -1,8 +1,8 @@
-const fetch = require('node-fetch');
-const express = require('express');
-const bodyParser = require('body-parser');
+import fetch from 'node-fetch';
+import express from 'express';
+import parser from 'body-parser';
 const app = express();
-app.use(bodyParser.json());
+app.use(parser.json());
 const port = 80;
 // NOTE: this example uses garlicblocks.com which doesn't support bech32/grlc1 addresses.
 // In the app, you must write the IP starting with http:// e.g. "http://192.168.1.75".
