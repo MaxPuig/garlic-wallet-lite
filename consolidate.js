@@ -148,14 +148,12 @@ async function main() {
     }
 }
 
-
 // Convert an address to scripthash
 function convertToScripthash(address) {
     let script = garlicoinjs.address.toOutputScript(address);
     let hash = garlicoinjs.crypto.sha256(script);
     return Buffer.from(hash.reverse()).toString('hex');
 }
-
 
 
 function connectToElectrum() {
