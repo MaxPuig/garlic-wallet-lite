@@ -1,11 +1,11 @@
 import garlicore from 'bitcore-lib-grlc';
-import axios from 'axios';
+import garlicoinjs from 'garlicoinjs-lib';
 import prompt from 'prompt-sync';
 const promptSync = prompt({ sigint: true });
-// Install node.js
-// Create a folder and put this file in it
-// Install packages using "npm i bitcore-lib-grlc axios prompt-sync"
-// Note: This script only works with garlicoin.info as it's the only insight explorer that supports bech32/grlc1 addresses
+import { ElectrumClient } from '@samouraiwallet/electrum-client';
+// Install node.js // https://nodejs.org/en/download/
+// Clone this repo OR download the zip and extract it (Green button on the top right of GitHub)
+// Install packages using "npm i bitcore-lib-grlc garlicoinjs-lib prompt-sync @samouraiwallet/electrum-client" in the terminal
 
 
 /* EDIT */
@@ -16,13 +16,13 @@ const address_starts_with_M = false; // true/false --> false if it starts with G
 const address_starts_with_grlc1 = false; // true/false --> false if it starts with G or M
 const time_between_tx_seconds = 10; // So you don't get ratelimited by the API
 const extra_secure_mode = true; // true/false --> asks for confirmation before every transaction is broadcasted
-const join_tx = 600; // Use "join_tx = 2" your first time to check if it works correctly. Don't go over 600
-garlicore.Transaction.FEE_PER_KB = 100000; // if you get "66: min relay fee not met", increase this number to 110000.
+const join_tx = 300; // Use "join_tx = 2" your first time to check if it works correctly. Don't go over 600
+garlicore.Transaction.FEE_PER_KB = 100_000; // if you get "66: min relay fee not met", increase this number to 110_000.
 /* EDIT */
 
 
 const privKey = new garlicore.PrivateKey(private_key);
-const url = 'https://garlicoin.info/api/GRLC/mainnet/';
+const client = new ElectrumClient(50002, 'services.garlicoin.ninja', 'tls'); // Change url if you want to use a different server
 
 
 function get_address(privKey) {
@@ -47,19 +47,20 @@ function get_address(privKey) {
 
 async function get_utxo(from_address) {
     try {
-        let api_url = url + 'address/' + from_address + '/?unspent=true&limit=0';
-        const response = await axios.get(api_url);
-        const utxos_api = response.data;
+        connectToElectrum();
+        const utxos_api = await client.blockchainScripthash_listunspent(convertToScripthash(from_address));
+        client.close();
+        const script = new garlicore.Script(garlicore.Address.fromString(from_address));
         const utxo = utxos_api.map(function (utxo) {
             return new garlicore.Transaction.UnspentOutput({
-                txid: utxo.mintTxid,
-                outputIndex: utxo.mintIndex,
-                address: utxo.address,
-                script: utxo.script,
+                txid: utxo.tx_hash,
+                outputIndex: utxo.tx_pos,
+                address: from_address,
+                script: script,
                 satoshis: utxo.value
             });
         });
-        // Separate all utxo into blocks of 600
+        // Separate all utxo into chunks
         const perChunk = join_tx; // utxo per chunk    
         let inputArray = utxo;
         let result = inputArray.reduce((resultArray, item, index) => {
@@ -69,17 +70,17 @@ async function get_utxo(from_address) {
             return resultArray;
         }, [])
         let utxos = [];
-        // Calculate sendable amount per chunk of 600
+        // Calculate sendable amount per chunk
         for (let x of result) {
             let total = 0;
             for (let y of x) {
                 total += y.satoshis;
             }
-            utxos.push({ utxo600: x, total });
+            utxos.push({ utxo_chunks: x, total });
         }
         return utxos;
     } catch (error) {
-        console.error(error);
+        console.error('Error in get_utxo()', error);
     }
 }
 
@@ -92,7 +93,7 @@ async function create_tx(privKey, to_address) {
     for (let j of utxo) {
         try {
             const tx = new garlicore.Transaction();
-            tx.from(j.utxo600);
+            tx.from(j.utxo_chunks);
             tx.to(to_address, Math.floor(j.total / 2));
             tx.change(to_address);
             tx.sign(privKey);
@@ -104,12 +105,10 @@ async function create_tx(privKey, to_address) {
     return all_tx;
 }
 
-function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 async function broadcast_tx(serialized_transactions) {
     const total_tx = serialized_transactions.length;
     let current_tx = 0;
-    let api_url = url + '/tx/send';
     for (let tx of serialized_transactions) {
         current_tx++;
         if (extra_secure_mode) {
@@ -120,20 +119,19 @@ async function broadcast_tx(serialized_transactions) {
             }
         }
         try {
-            const response = await axios.post(api_url, {
-                rawTx: tx.serialized_tx
-            });
-            const txid = await response.data;
-            console.log('https://garlicoin.info/#/GRLC/mainnet/tx/' + txid.txid);
+            connectToElectrum();
+            const txid = await client.blockchainTransaction_broadcast(tx.serialized_tx);
+            client.close();
+            console.log('Transaction: https://explorer.freshgrlc.net/grlc/transactions/' + txid);
         } catch (error) {
-            console.log(error.response.data);
+            console.log(error);
         }
         if (current_tx < total_tx) {
             console.log(`Waiting ${time_between_tx_seconds} seconds before sending the next transaction...`);
             await sleep(time_between_tx_seconds * 1000); // wait x sec until next transaction is broadcasted
         }
     }
-    console.log('No more transactions to send! Exiting...');
+    console.log('No more transactions to send! Stopping script...');
 }
 
 
@@ -149,6 +147,30 @@ async function main() {
         console.log('Check "private_key", "address_starts_with_M" and "destination_address" and try again.');
     }
 }
+
+
+// Convert an address to scripthash
+function convertToScripthash(address) {
+    let script = garlicoinjs.address.toOutputScript(address);
+    let hash = garlicoinjs.crypto.sha256(script);
+    return Buffer.from(hash.reverse()).toString('hex');
+}
+
+
+
+function connectToElectrum() {
+    try {
+        client.initElectrum(
+            { client: 'electrum-client-js', version: ['1.2', '1.4'] },
+            { retryPeriod: 5000, maxRetry: 10, pingPeriod: 5000 }
+        );
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 
 main();
