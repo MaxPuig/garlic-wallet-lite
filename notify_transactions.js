@@ -1,6 +1,7 @@
-require('dotenv').config()
-const fetch = require('node-fetch');
-const RpcClient = require('garlicoind-rpc');
+import dotenv from 'dotenv';
+dotenv.config();
+import fetch from 'node-fetch';
+import RpcClient from 'garlicoind-rpc';
 const config = {
     protocol: 'http',
     user: process.env.RPC_USER,
