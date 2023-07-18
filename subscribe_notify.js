@@ -1,12 +1,13 @@
-require('dotenv').config()
+import dotenv from 'dotenv';
+dotenv.config();
 const key = process.env.FCM_KEY;
-const fs = require('fs');
-const https = require('https');
-const privateKey = fs.readFileSync('./privkey.pem', 'utf8');
-const certificate = fs.readFileSync('./fullchain.pem', 'utf8');
+import { readFileSync } from 'fs';
+import { createServer } from 'https';
+const privateKey = readFileSync('./privkey.pem', 'utf8');
+const certificate = readFileSync('./fullchain.pem', 'utf8');
 const options = { key: privateKey, cert: certificate };
-const fetch = require('node-fetch');
-const express = require('express');
+import fetch from 'node-fetch';
+import express from 'express';
 const app = express();
 const port = 6969;
 
@@ -96,7 +97,7 @@ function log_events(event) {
 }
 
 
-const httpsServer = https.createServer(options, app);
+const httpsServer = createServer(options, app);
 
 
 httpsServer.listen(port, () => {
