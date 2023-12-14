@@ -15,9 +15,9 @@ app.get("/", function (req, res) {
   // deletes /#/ from the url to access txid on explorer
   let response = Buffer.from(
     "<script> const hash = window.location.hash;" +
-      'if (hash.length > 0 && hash.includes("#/")) {' +
-      'window.location.replace(window.location.href.replace("#/", ""));' +
-      "} </script >"
+    'if (hash.length > 0 && hash.includes("#/")) {' +
+    'window.location.replace(window.location.href.replace("#/", ""));' +
+    "} </script >"
   );
   res.set("Content-Type", "text/html");
   res.send(response);
@@ -25,15 +25,15 @@ app.get("/", function (req, res) {
 
 app.post("/api/GRLC/mainnet/tx/send", async function (req, res) {
   // Send a raw transaction to the network
+  const rawTransaction = req.body.rawTx;
+  const client = await getElectrumClient();
   try {
-    const rawTransaction = req.body.rawTx;
-    const client = await getElectrumClient();
     let response = await client.blockchainTransaction_broadcast(rawTransaction);
     client.close();
-    response = { txid: response };
-    res.send(response);
+    res.send({ txid: response });
   } catch (error) {
-    res.send(error);
+    client.close();
+    res.send({ error });
   }
 });
 
@@ -51,8 +51,18 @@ app.get("/api/GRLC/mainnet/address/:address/balance", async function (req, res) 
   const address = req.params.address;
   const scripthash = convertToScripthash(address);
   const client = await getElectrumClient();
-  const response = await client.blockchainScripthash_getBalance(scripthash);
-  client.close();
+  if (scripthash == null) {
+    client.close();
+    res.send({ error: "Invalid address" });
+    return;
+  }
+  let response;
+  try {
+    response = await client.blockchainScripthash_getBalance(scripthash);
+    client.close();
+  } catch (error) {
+    response = { error };
+  }
   res.send(response);
 });
 
@@ -60,8 +70,12 @@ app.get("/api/GRLC/mainnet/address/:address", async function (req, res) {
   // Get the utxos of an address
   const address = req.params.address;
   const scripthash = convertToScripthash(address);
+  if (scripthash == null) {
+    res.send({ error: "Invalid address" });
+    return;
+  }
+  const client = await getElectrumClient();
   try {
-    const client = await getElectrumClient();
     const response = await client.blockchainScripthash_listunspent(scripthash);
     client.close();
     const utxos = response.map(function (utxo) {
@@ -73,6 +87,7 @@ app.get("/api/GRLC/mainnet/address/:address", async function (req, res) {
     });
     res.send(utxos);
   } catch (error) {
+    client.close();
     res.send(error);
   }
 });
@@ -101,7 +116,11 @@ async function getElectrumClient() {
 
 // Convert an address to scripthash (used for electrum)
 function convertToScripthash(address) {
-  let script = garlicoinjs.address.toOutputScript(address);
-  let hash = garlicoinjs.crypto.sha256(script);
-  return Buffer.from(hash.reverse()).toString("hex");
+  try {
+    let script = garlicoinjs.address.toOutputScript(address);
+    let hash = garlicoinjs.crypto.sha256(script);
+    return Buffer.from(hash.reverse()).toString("hex");
+  } catch (error) {
+    return null;
+  }
 }

@@ -7,14 +7,14 @@ Garlicoin Wallet Lite is an iOS and Android app that uses the Insight Explorer t
 - The API URL can be changed in the settings tab.
 - Opt-in notifications for new transactions to any address.
 
-> This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/), [express](https://expressjs.com/), [webpack](https://webpack.js.org/), [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin), [axios](https://github.com/axios/axios) and [CoinGecko](https://www.coingecko.com/api).
+> This app was made using [AppGyver](https://www.appgyver.com/), [garlicoin-js](https://github.com/MaxPuig/garlicoinjs-lib), [bitcore-lib-grlc](https://github.com/MaxPuig/bitcore-lib-grlc), [GoQR](https://goqr.me/api/), [express](https://expressjs.com/), [webpack](https://webpack.js.org/), [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) and [CoinGecko](https://www.coingecko.com/api).
 
 ## Support
 If you wish to receive support or get in contact, please open an issue on [Github](https://github.com/MaxPuig/garlic-wallet-lite/issues/new) or send an email to info@garlicoin.io.
 
 ## Download App
 [iOS App Store](https://apps.apple.com/app/garlic-wallet-lite/id1614741682)
-> iOS ≥14: iPhone, iPad, iPod Touch and M1 Macs. The iOS version has a beta channel using [TestFlight](https://testflight.apple.com/join/LPI0nwol).
+> iOS ≥14: iPhone, iPad, iPod Touch and M1+ Macs. The iOS version has a beta channel using [TestFlight](https://testflight.apple.com/join/LPI0nwol).
 
 [Android Play Store](https://play.google.com/store/apps/details?id=com.garlicwalletlite.app)
 > Android beta version available on the [Android Play Store](https://play.google.com/apps/testing/com.garlicwalletlite.app).
@@ -87,7 +87,7 @@ Help -> Debug Window -> Console and type:
 "importprivkey <Priv_Key>"
 ```
 
-If you get this error `invalid private key encoding (code -5)` this means the Private Key's format is in base58. You can convert it to WIF by running [this file](./import_privkey_core.js) in node.js. 
+If you get this error `invalid private key encoding (code -5)` this means the Private Key's format is in base58. You can convert it to WIF by running [this file](./import_privkey_core.js) in node.js. You can also use the tool on https://git.maxpuig.com/GWW/ from [this repository](https://github.com/MaxPuig/GWW).
 
 > If you import a new Private Key into Garlicoin Core, you will need to reindex the entire blockchain.
 
